@@ -178,26 +178,13 @@ def send_message():
 
 @app.route('/authenticate', methods = ['POST'])
 def authenticate():
-    #Get data form request
-    time.sleep(3)
-    message = json.loads(request.data)
-    username = message['username']
-    password = message['password']
-
-    # Look in database
-    db_session = db.getSession(engine)
-
-    try:
-        user = db_session.query(entities.User
-            ).filter(entities.User.username==username
-            ).filter(entities.User.password==password
-            ).one()
-        session['logged_user'] = user.id
-        message = {'message':'Authorized'}
-        return Response(message, status=200,mimetype='application/json')
-    except Exception:
-        message = {'message':'Unauthorized'}
-        return Response(message, status=401,mimetype='application/json')
+    username = request.form['username']
+    password = request.form['password']
+    if username=='mauriciobernuy' and password=='utec123':
+        session['usuario'] = username
+        return 'Greetings, ' + username + '!'
+    else:
+        return username+"is not a valid username!"
 
 @app.route('/current', methods = ['GET'])
 def current_user():
@@ -220,10 +207,14 @@ if __name__ == '__main__':
 #stateful interaction
 @app.route('/suma/<numero>')
 def suma(numero):
-        suma = session['suma']
-        suma = suma + int(numero)
-        session[suma]=suma
-        return str(suma)
+    if 'suma' not in session:
+        session['suma'] = 0
+
+    suma = session['suma']
+    suma = suma + int(numero)
+    session[suma]=suma
+    return str(suma)
+
 
 if __name__ == '__main__':
     app.secret_key = ".."
