@@ -50,21 +50,21 @@ def get_users():
     data = dbResponse[:]
     return Response(json.dumps(data, cls=connector.AlchemyEncoder), mimetype='application/json')
 
-@app.route('/users', methods = ['PUT'])
+@app.route('/users/<id>', methods = ['PUT'])
 def update_user():
     session = db.getSession(engine)
-    id = request.form['key']
+    #id = request.form['key']
     user = session.query(entities.User).filter(entities.User.id == id).first()
-    c = json.loads(request.form['values'])
+    c = json.loads(request.data)
     for key in c.keys():
         setattr(user, key, c[key])
     session.add(user)
     session.commit()
     return 'Updated User'
 
-@app.route('/users', methods = ['DELETE'])
-def delete_user():
-    id = request.form['key']
+@app.route('/users/<id>', methods = ['DELETE'])
+def delete_user(id):
+    #id = request.form['key']
     session = db.getSession(engine)
     user = session.query(entities.User).filter(entities.User.id == id).one()
     session.delete(user)
