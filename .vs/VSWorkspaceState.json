@@ -2,7 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\web",
-    "\\web\\database"
+    "\\web\\database",
+    "\\web\\model",
+    "\\web\\templates"
   ],
   "SelectedNode": "\\web\\server.py",
   "PreviewInSolutionExplorer": false

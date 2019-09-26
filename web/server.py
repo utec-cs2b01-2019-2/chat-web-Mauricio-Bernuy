@@ -20,7 +20,8 @@ def static_content(content):
 
 @app.route('/users', methods = ['POST'])
 def create_user():
-    c =  json.loads(request.form['values'])
+    #c =  json.loads(request.form['values'])
+    c =  json.loads(request.data)
     user = entities.User(
         username=c['username'],
         name=c['name'],
@@ -191,6 +192,52 @@ def current_user():
     db_session = db.getSession(engine)
     user = db_session.query(entities.User).filter(entities.User.id == session['logged_user']).first()
     return Response(json.dumps(user,cls=connector.AlchemyEncoder),mimetype='application/json')
+
+#API de GRUPOS
+#1.CREATE
+@app.route('/groups', methods = ['POST'])
+def create_group():
+    c = json.loads(request.data)
+    group = entities.Group(name=c['name'])
+    session_db = db.getSession(engine)
+    session_db.add(group)
+    session_db.commit()
+    return 'Created Group'
+#2.READ
+@app.route('/groups/<id>', methods = ['GET'])
+def read_group(id):
+    group = session_db.query(entities.Group).filter(entities.Group.id ==id).first()
+    data = json.dumps(group, cls=connector.AlchemyEncoder)
+    return Response (data, status=200, mimetype='application/json')
+
+
+@app.route('/groups', methods = ['GET'])
+def get_all_groups():
+    session_db = db.getSession(engine)
+    dbResponse = session_db.query(entities.Group)
+    data = dbResponse[:]
+    return Response(json.dumps(data,cls=connector.AlchemyEncoder), mimetype='application/json')
+
+#UPDATE
+@app.route('/groups/<id>', methods = ['PUT'])
+def update_group():
+    session = db.getSession(engine)
+    group = session_db.query(entities.Group).filter(entities.Group.id ==id).first()
+    c = json.loads(request.data)
+    for key in c.keys():
+        setattr(group, key, c[key])
+    session_db.add(group)
+    session_db.commit()
+    return 'Updated Group'
+
+#DELETE
+@app.route('/groups/<id>', methods = ['DELETE'])
+def delete_group(id):
+    session = db.getSession(engine)
+    group = session_db.query(entities.Group).filter(entities.Group.id == id).one()
+    session.delete(group)
+    session.commit()
+    return "Deleted Group"
 
 @app.route('/logout', methods = ['GET'])
 def logout():
