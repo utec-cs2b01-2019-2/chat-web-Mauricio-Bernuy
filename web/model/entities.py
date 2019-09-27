@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Sequence, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-from databases import connector
+from database import connector
 
 
 class User(connector.Manager.Base):

@@ -1,6 +1,8 @@
 from flask import Flask,render_template, request, session, Response, redirect
 from database import connector
 from model import entities
+import django.db
+
 import datetime
 import json
 import time
@@ -52,7 +54,7 @@ def get_users():
     return Response(json.dumps(data, cls=connector.AlchemyEncoder), mimetype='application/json')
 
 @app.route('/users/<id>', methods = ['PUT'])
-def update_user():
+def update_user(id):
     session = db.getSession(engine)
     #id = request.form['key']
     user = session.query(entities.User).filter(entities.User.id == id).first()
@@ -142,7 +144,7 @@ def update_message():
     session.commit()
     return 'Updated Message'
 
-@app.route('/messages', methods = ['DELETE'])
+@app.route('/messages', methods = [ 'DELETE'])
 def delete_message():
     id = request.form['key']
     session = db.getSession(engine)
@@ -179,13 +181,25 @@ def send_message():
 
 @app.route('/authenticate', methods = ['POST'])
 def authenticate():
-    username = request.form['username']
-    password = request.form['password']
-    if username=='mauriciobernuy' and password=='utec123':
-        session['usuario'] = username
-        return 'Greetings, ' + username + '!'
-    else:
-        return username+"is not a valid username!"
+    
+    time.sleep(3)
+    message = json.loads(request.data)
+    username = message['username']
+    password = message['password']
+    
+    db_session = db.getSession(engine)
+
+    try:
+        user = db_session.query(entities.User
+                                ).filter(entities.User.username==username
+                                ).filter(entities.User.password==password
+                                ).one()
+        session['logged_user'] = user.id
+        message = {'message':'Authorized'}
+        return Response(message, status=200,mimetype='application/json')
+    except Exception:
+        message = {'message':'Unauthorized'}
+        return Response(message, status=401,mimetype='application/json')
 
 @app.route('/current', methods = ['GET'])
 def current_user():

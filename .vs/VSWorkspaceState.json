@@ -4,7 +4,9 @@
     "\\web",
     "\\web\\database",
     "\\web\\model",
-    "\\web\\templates"
+    "\\web\\static\\css",
+    "\\web\\static\\js",
+    "\\web\\static\\js\\libs"
   ],
   "SelectedNode": "\\web\\server.py",
   "PreviewInSolutionExplorer": false
