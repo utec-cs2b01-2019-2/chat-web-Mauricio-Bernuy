@@ -3,10 +3,7 @@
     "",
     "\\web",
     "\\web\\database",
-    "\\web\\model",
-    "\\web\\static\\css",
-    "\\web\\static\\js",
-    "\\web\\static\\js\\libs"
+    "\\web\\model"
   ],
   "SelectedNode": "\\web\\server.py",
   "PreviewInSolutionExplorer": false
