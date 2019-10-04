@@ -7,7 +7,7 @@ void sendMessage(){
 function get_all_users() {
     console.log("voy a traer todos los usuarios")
     $.getJSON("/users", function (data) {
-        var i = 0;
+    var i = 0;
         $.each(data, function () {
             user_to = data[i]['id'];
             e = '<div classs="alert" role="alert">';

@@ -12,16 +12,30 @@
 
 <body>
     <a href="/logout">Logout</a>
-    <table width="100%" border="1">
+    <table width="100%" border="1px">
         <tr>
             <td width="30%">
-                <div id=" current">
-                <label id="current username"</label>
-                    <button type="button" class="btn btn-primary">get all users</button>
+                <div id="current">
+                <label id="current_username"</label>
+                    <button type="button" class="btn btn-primary" onclick="get_all_users()">Get all users</button>
                 </div>
+                <div id="users"></div>
             </td>
+            <td width="70%">
+                <div id="boxMessage">
+                </div>
+
+                <div>
+                    <input type="text" size="200" id="txtMessage">
+                </div>
+
+                <div>
+                    <button type="button" class="btn btn-primary" onclick="sendMessage()">Send</button>
+                </div>
+
+            </td>
+
         </tr>
     </table>
-    <button type="button" class="btn btn-primary">Primary</button>
 </body>
 </html>
