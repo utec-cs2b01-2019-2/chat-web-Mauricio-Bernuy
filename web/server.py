@@ -1,7 +1,7 @@
 from flask import Flask,render_template, request, session, Response, redirect
-from database import connector
-from model import entities
-import django.db
+
+from web.database import connector
+from web.model import entities
 
 import datetime
 import json
@@ -22,7 +22,6 @@ def static_content(content):
 
 @app.route('/users', methods = ['POST'])
 def create_user():
-    #c =  json.loads(request.form['values'])
     c =  json.loads(request.data)
     user = entities.User(
         username=c['username'],
@@ -181,25 +180,27 @@ def send_message():
 
 @app.route('/authenticate', methods = ['POST'])
 def authenticate():
-    
-    time.sleep(3)
+    #Get data form request
     message = json.loads(request.data)
     username = message['username']
     password = message['password']
-    
+
+    # Look in database
     db_session = db.getSession(engine)
 
     try:
         user = db_session.query(entities.User
-                                ).filter(entities.User.username==username
-                                ).filter(entities.User.password==password
-                                ).one()
+            ).filter(entities.User.username==username
+            ).filter(entities.User.password==password
+            ).one()
+
         session['logged_user'] = user.id
         message = {'message':'Authorized'}
-        return Response(message, status=200,mimetype='application/json')
+        return Response(json.dumps(message,cls=connector.AlchemyEncoder), status=200,mimetype='application/json')
     except Exception:
         message = {'message':'Unauthorized'}
-        return Response(message, status=401,mimetype='application/json')
+        return Response(json.dumps(message,cls=connector.AlchemyEncoder), status=401,mimetype='application/json')
+
 
 @app.route('/current', methods = ['GET'])
 def current_user():

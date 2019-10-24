@@ -3,8 +3,9 @@
     "",
     "\\web",
     "\\web\\static",
+    "\\web\\static\\js",
     "\\web\\templates"
   ],
-  "SelectedNode": "\\web\\server.py",
+  "SelectedNode": "\\web\\static\\js\\login.js",
   "PreviewInSolutionExplorer": false
 }

@@ -12,13 +12,15 @@
 
 <body>
     <a href="/logout">Logout</a>
-    <table width="100%" border="1px">
+    <table width="100%" border="1">
         <tr>
             <td width="30%">
                 <div id="current">
-                <label id="current_username"</label>
-                    <button type="button" class="btn btn-primary" onclick="get_all_users()">Get all users</button>
+                <label id="current_username" />
+                <button type="button" class="btn btn-primary" onclick="get_current()">Get current user</button>
+                <button type="button" class="btn btn-primary" onclick="get_all_users()">Get all users</button>
                 </div>
+
                 <div id="users"></div>
             </td>
             <td width="70%">
