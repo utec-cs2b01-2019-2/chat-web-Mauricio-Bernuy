@@ -1,7 +1,8 @@
 from flask import Flask,render_template, request, session, Response, redirect
 
-from web.database import connector
-from web.model import entities
+from os import environ
+from database import connector
+from model import entities
 
 import datetime
 import json
@@ -11,6 +12,7 @@ db = connector.Manager()
 engine = db.createEngine()
 
 app = Flask(__name__)
+app.secret_key = ".."
 
 @app.route('/')
 def index():
@@ -279,5 +281,5 @@ def suma(numero):
 
 
 if __name__ == '__main__':
-    app.secret_key = ".."
+    
     app.run(debug=True,port=8000, threaded=True, host=('127.0.1.1'))

@@ -2,10 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\web",
-    "\\web\\static",
-    "\\web\\static\\js",
     "\\web\\templates"
   ],
-  "SelectedNode": "\\web\\static\\js\\login.js",
+  "SelectedNode": "\\web\\model",
   "PreviewInSolutionExplorer": false
 }
