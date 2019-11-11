@@ -1,6 +1,6 @@
-// JavaScript source code
 $(function () {
-    var url = "http://http://127.0.0.1:5000/messages";
+    var url = 'http://' + document.domain + ':' + location.port + '/messages';
+    var url_users = 'http://' + document.domain + ':' + location.port + '/users';
     $("#grid").dxDataGrid({
         dataSource: DevExpress.data.AspNet.createStore({
             key: "id",
@@ -10,9 +10,7 @@ $(function () {
             deleteUrl: url,
             onBeforeSend: function (method, ajaxOptions) {
                 ajaxOptions.xhrFields = { withCredentials: true };
-
             }
-
         }),
 
         editing: {
@@ -40,15 +38,43 @@ $(function () {
             dataType: "number",
             allowEditing: false
         }, {
-            dataField: "username"
+            dataField: "content"
         }, {
-            dataField: "name"
+            dataField: "sent_on",
+            dataType: "date",
+            format: "MM/dd/yyyy hh:mm"
         }, {
-            dataField: "fullname"
+            dataField: "user_from_id",
+            lookup: {
+                dataSource: DevExpress.data.AspNet.createStore({
+                    key: "id",
+                    loadUrl: url_users,
+                    insertUrl: url_users,
+                    updateUrl: url_users,
+                    deleteUrl: url_users,
+                    onBeforeSend: function (method, ajaxOptions) {
+                        ajaxOptions.xhrFields = { withCredentials: true };
+                    }
+                }),
+                valueExpr: "id",
+                displayExpr: "username"
+            }
         }, {
-            dataField: "password"
-        },],
-
-
+            dataField: "user_to_id",
+            lookup: {
+                dataSource: DevExpress.data.AspNet.createStore({
+                    key: "id",
+                    loadUrl: url_users,
+                    insertUrl: url_users,
+                    updateUrl: url_users,
+                    deleteUrl: url_users,
+                    onBeforeSend: function (method, ajaxOptions) {
+                        ajaxOptions.xhrFields = { withCredentials: true };
+                    }
+                }),
+                valueExpr: "id",
+                displayExpr: "username"
+            }
+        }],
     }).dxDataGrid("instance");
 });

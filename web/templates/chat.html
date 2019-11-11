@@ -3,24 +3,20 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>chat</title>
     <script src="/static/js/libs/jquery.js"></script>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css"><link>
-    <script src="/static/js/libs/bootstrap.js"></script>
+    <script src="/static/js/libs/bootstrap.min.js"></script>
     <script src="/static/js/chat.js"></script>
+    <title>chat</title>
 </head>
 
-<body>
-    <a href="/logout">Logout</a>
+<body onload="get_current()">
+    <a href={{url_for('index')}}>Back to index</a>
+
     <table width="100%" border="1">
         <tr>
             <td width="30%">
-                <div id="current">
-                <label id="current_username" />
-                <button type="button" class="btn btn-primary" onclick="get_current()">Get current user</button>
-                <button type="button" class="btn btn-primary" onclick="get_all_users()">Get all users</button>
-                </div>
-
+                <div id="currentuser"></div>
                 <div id="users"></div>
             </td>
             <td width="70%">
