@@ -1,62 +1,24 @@
 ﻿<!DOCTYPE html>
-
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>
-        users
-    </title>
-    <link rel="stylesheet" href="styles.css" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <script src="/static/js/libs/jquery.js"></script>
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css"><link>
+    <link rel="stylesheet" href="/static/css/libs/bootstrap.min.css">
     <script src="/static/js/libs/bootstrap.js"></script>
-
-</head>
-<body>
-    <table>
-        <tr>
-            <td>
-                <form onsubmit="event.preventDefault();onFormSubmit();" autocomplete="off">
-                    <div>
-                        <label>username</label>
-                        <input type="text" name="username" id="username">
-                    </div>
-                    <div>
-                        <label>name</label>
-                        <input type="text" name="name" id="name">
-                    </div>
-                    <div>
-                        <label>fullname</label>
-                        <input type="text" name="fullname" id="fullname">
-                    </div>
-                    <div>
-                        <label>password</label>
-                        <input type="password" name="password" id="password">
-                    </div>
-                    <div class="form-action-buttons">
-                        <input type="submit" value="Submit">
-                    </div>
-                </form>
-            </td>
-            <td>
-                <table class="list" id="List of Usernames">
-                    <thead>
-                        <tr>
-                            <th>username</th>
-                            <th>name</th>
-                            <th>fullname</th>
-                            <th>password</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-
-    </table>
-
+    <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/17.2.7/css/dx.spa.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/17.2.7/css/dx.common.css" />
+    <link rel="dx-theme" data-theme="generic.light" href="https://cdn3.devexpress.com/jslib/17.2.7/css/dx.light.css" />
+    <script src="https://cdn3.devexpress.com/jslib/17.2.7/js/dx.all.js"></script>
+    <script src="https://unpkg.com/devextreme-aspnet-data@1.3.0"></script>
     <script src="/static/js/users.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="dx-viewport">
+    <div class="demo-container">
+        <div id="grid"></div>
+    </div>
 </body>
 </html>

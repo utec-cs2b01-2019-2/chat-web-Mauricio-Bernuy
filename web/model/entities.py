@@ -1,6 +1,8 @@
 from sqlalchemy import Column, Integer, String, Sequence, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-from web.database import connector
+import datetime
+
+from database import connector
 
 
 class User(connector.Manager.Base):
@@ -14,9 +16,10 @@ class User(connector.Manager.Base):
 
 class Message(connector.Manager.Base):
     __tablename__ = 'messages'
-    id = Column(Integer, Sequence('message_id_seq'), primary_key=True)
+    id = Column(Integer, Sequence('chat_message_id_seq'), primary_key=True)
     content = Column(String(500))
-    sent_on = Column(DateTime())
+    sent_on = Column(DateTime(), default= datetime.datetime.utcnow, nullable=False)
+    timestamp = Column(DateTime, default= datetime.datetime.utcnow)
     user_from_id = Column(Integer, ForeignKey('users.id'))
     user_to_id = Column(Integer, ForeignKey('users.id'))
     user_from = relationship(User, foreign_keys=[user_from_id])

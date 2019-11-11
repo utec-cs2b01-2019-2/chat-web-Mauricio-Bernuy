@@ -1,10 +1,9 @@
 function login() {
-    console.log("LOGIN USER");
+    console.log("User Login");
     var username = $('#username').val();//getting username by id
     var password = $('#password').val();//getting password by id
-    console.log("DATA>", username, password);
+    console.log("DATA input>", username, password);
     var credentials = { 'username': username, 'password': password };
-    console.log(credentials);
     $.post({
         url: '/authenticate',
         type: 'post',
@@ -12,11 +11,11 @@ function login() {
         contentType: 'application/json',
         data: JSON.stringify(credentials),
         success: function (data) {
+            var url = 'http://' + document.domain + ':' + location.port + '/';
+            $(location).attr('href', url);
             console.log("Authenticated!");
-            alert("Authenticated!!!");
+            alert("Authenticated");
         },
-        
+        data: JSON.stringify(credentials)
     });
-
-
 }

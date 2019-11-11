@@ -1,31 +1,22 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <script src="/static/js/libs/jquery.js"></script>
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
-    <script src="/static/js/libs/bootstrap.js"></script>
-    <script src="/static/js/login.js"></script>
-    <title>LOGIN</title>
+﻿
+{% extends "index.html" %}
+{% block content %}
+        <table align="center">
+            <tr>
+                <td>Username</td>
+                <td><input type="text" id="username" name="username"></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><input type="password" id="password" name="password"></td>
+            </tr>
+            <tr>
+                <td style="padding-bottom:100px" align="center" colspan="2">
+                    <button type="button" class="btn btn-primary" href="{{url_for('index')}}"onclick="login()">Login</button>
+                </td>
+            </tr>
 
-</head>
-<body>
-<table>
-    <tr>
-        <td>Username</td>
-        <td><input type="text" id="username" name="username" ></td>
-    </tr>
-    <tr>
-        <td>Password</td>
-        <td><input type="password" id="password" name="password"></td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            <button type="button" class="btn btn-primary" onclick="login()" >Login</button></td>
-    </tr>
-
-</table>
+        </table>
     
-
-</body>
-</html>
+  
+{% endblock %}

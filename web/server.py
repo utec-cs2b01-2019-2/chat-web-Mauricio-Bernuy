@@ -16,7 +16,13 @@ app.secret_key = ".."
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    db_session = db.getSession(engine)
+    if 'logged_user' in session:
+        users = db_session.query(entities.User).filter(entities.User.id == (session['logged_user']))
+        for user in users:
+            return render_template('index.html', name = user.name)
+    else:
+        return render_template('login.html', name = 'Log in to your account')
 
 @app.route('/static/<content>')
 def static_content(content):
@@ -24,7 +30,7 @@ def static_content(content):
 
 @app.route('/users', methods = ['POST'])
 def create_user():
-    c =  json.loads(request.data)
+    c =  json.loads(request.form['values'])
     user = entities.User(
         username=c['username'],
         name=c['name'],
@@ -54,21 +60,21 @@ def get_users():
     data = dbResponse[:]
     return Response(json.dumps(data, cls=connector.AlchemyEncoder), mimetype='application/json')
 
-@app.route('/users/<id>', methods = ['PUT'])
-def update_user(id):
+@app.route('/users', methods = ['PUT'])
+def update_user():
     session = db.getSession(engine)
-    #id = request.form['key']
+    id = request.form['key']
     user = session.query(entities.User).filter(entities.User.id == id).first()
-    c = json.loads(request.data)
+    c =  json.loads(request.form['values'])
     for key in c.keys():
         setattr(user, key, c[key])
     session.add(user)
     session.commit()
     return 'Updated User'
 
-@app.route('/users/<id>', methods = ['DELETE'])
-def delete_user(id):
-    #id = request.form['key']
+@app.route('/users', methods = ['DELETE'])
+def delete_user():
+    id = request.form['key']
     session = db.getSession(engine)
     user = session.query(entities.User).filter(entities.User.id == id).one()
     session.delete(user)
@@ -145,7 +151,7 @@ def update_message():
     session.commit()
     return 'Updated Message'
 
-@app.route('/messages', methods = [ 'DELETE'])
+@app.route('/messages', methods = ['DELETE'])
 def delete_message():
     id = request.form['key']
     session = db.getSession(engine)
@@ -265,8 +271,6 @@ def logout():
 @app.route('/cuantasletras/<nombre>')
 def cuantas_letras(nombre):
     return str(len(nombre))
-if __name__ == '__main__':
-    app.run()
 
 #stateful interaction
 @app.route('/suma/<numero>')
@@ -281,5 +285,4 @@ def suma(numero):
 
 
 if __name__ == '__main__':
-    
-    app.run(debug=True,port=8000, threaded=True, host=('127.0.1.1'))
+    app.run(debug=True,port=80, threaded=True, use_reloader=False)
