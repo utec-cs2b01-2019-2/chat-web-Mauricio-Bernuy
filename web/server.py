@@ -204,6 +204,7 @@ def authenticate():
 
         session['logged_user'] = user.id
         message = {'message':'Authorized'}
+        message = {'message':'Authorized', 'user_id': user.id, 'username': user.username}
         return Response(json.dumps(message,cls=connector.AlchemyEncoder), status=200,mimetype='application/json')
     except Exception:
         message = {'message':'Unauthorized'}
@@ -285,4 +286,4 @@ def suma(numero):
 
 
 if __name__ == '__main__':
-    app.run(debug=True,port=80, threaded=True, use_reloader=False)
+    app.run(debug=True,port=8000, threaded=True, use_reloader=False)
